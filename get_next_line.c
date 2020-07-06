@@ -6,7 +6,7 @@
 /*   By: spowers <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 23:29:28 by spowers           #+#    #+#             */
-/*   Updated: 2020/07/06 18:14:34 by spowers          ###   ########.fr       */
+/*   Updated: 2020/07/06 20:52:12 by spowers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ char	*check_ost(char *ost, char **line)
 int	get_next_line(int fd, char **line) // 1, 0, -1
 {
 	char buf[BUFF_SIZE + 1];
-	int bytes;
-	char *p_n;
-	static char *ost;
-	char *tmp;
+	int bytes; // прочитанные байты
+	char *p_n; // массив
+	static char *ost; //отстаток после /n от следстроки
+	char *tmp; // переменная для остатка чтоб ее очистить
 
 	if (fd < 0 || !line || BUFF_SIZE <= 0)
 		return (-1);
@@ -80,7 +80,7 @@ int	get_next_line(int fd, char **line) // 1, 0, -1
 		*line = ft_strjoin(*line, buf);
 		free(tmp);
 	}
-	return (bytes || ft_strlen(ost) || ft_strlen(*line)) ? 1 : 0;
+	return (bytes || ft_strlen(ost) || ft_strlen(*line)) ? 1 : 0; // 1 или 0
 }
 
 int     main(void)
