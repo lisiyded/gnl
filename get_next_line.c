@@ -6,33 +6,33 @@
 /*   By: spowers <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 23:29:28 by spowers           #+#    #+#             */
-/*   Updated: 2020/07/06 20:52:12 by spowers          ###   ########.fr       */
+/*   Updated: 2020/07/06 22:23:16 by spowers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char    *ft_strcpy(char *dst, const char *src)
+char		*ft_strcpy(char *dst, const char *src)
 {
-        int i;
+	int	i;
 
-        i = 0;
-        while (src[i])
-        {
-                dst[i] = src[i];
-                i++;
-        }
-        dst[i] = '\0';
-        return (dst);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
 }
 
-char	*check_ost(char *ost, char **line)
+char		*check_ost(char *ost, char **line)
 {
-	char *p_n;
+	char	*p_n;
 
 	p_n = NULL;
 	if (ost)
-		if ((p_n = ft_strchr(ost, '\n'))) // новая линия нашлась
+		if ((p_n = ft_strchr(ost, '\n')))
 		{
 			*p_n = '\n';
 			*line = ft_strdup(ost);
@@ -44,28 +44,27 @@ char	*check_ost(char *ost, char **line)
 			if (*ost)
 				while (*ost)
 				{
-					*ost= '\0';
+					*ost = '\0';
 					ost++;
-				}	
+				}
 		}
 	else
 		*line = ft_strnew(1);
-	return(p_n);
-}	
+	return (p_n);
+}
 
-int	get_next_line(int fd, char **line) // 1, 0, -1
+int			get_next_line(int fd, char **line)
 {
-	char buf[BUFF_SIZE + 1];
-	int bytes; // прочитанные байты
-	char *p_n; // массив
-	static char *ost; //отстаток после /n от следстроки
-	char *tmp; // переменная для остатка чтоб ее очистить
+	char		buf[BUFF_SIZE + 1];
+	char		*p_n;
+	char		*tmp;
+	static char	*ost;
+	int			bytes;
 
 	if (fd < 0 || !line || BUFF_SIZE <= 0)
 		return (-1);
 	if (!(*line = ft_strdup(buf)))
 		return (-1);
-
 	p_n = check_ost(ost, line);
 	while (!p_n && (bytes = read(fd, buf, BUFF_SIZE)))
 	{
@@ -80,21 +79,5 @@ int	get_next_line(int fd, char **line) // 1, 0, -1
 		*line = ft_strjoin(*line, buf);
 		free(tmp);
 	}
-	return (bytes || ft_strlen(ost) || ft_strlen(*line)) ? 1 : 0; // 1 или 0
-}
-
-int     main(void)
-{
-char    *line;
-int     fd;
-
-fd = open("text.txt", O_RDONLY);
-get_next_line(fd, &line);
-printf("%s\n\n", line);
-
-get_next_line(fd, &line);
-printf("%s\n\n", line);
-
-get_next_line(fd, &line);
-printf("%s\n\n", line);
+	return (bytes || ft_strlen(ost) || ft_strlen(*line)) ? 1 : 0;
 }
