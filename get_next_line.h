@@ -6,7 +6,7 @@
 /*   By: spowers <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 16:37:41 by spowers           #+#    #+#             */
-/*   Updated: 2020/07/06 22:01:50 by spowers          ###   ########.fr       */
+/*   Updated: 2020/07/10 14:16:20 by spowers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define BUFF_SIZE 10
 
 int			get_next_line(int fd, char **line);
-size_t		*ft_strlen(const char *s);
+size_t		ft_strlen(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_strnew(size_t size);
 char		*ft_strchr(const char *s, int c);
