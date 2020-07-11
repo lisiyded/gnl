@@ -59,21 +59,41 @@ char            *ft_strjoin(char const *s1, char const *s2)
         return (str);
 }
 
+char            *ft_strchr(const char *s, int c)
+{
+        while (*s)
+        {
+                if (*s == c)
+                        return ((char *)s);
+                s++;
+        }
+        if (c == '\0')
+                return ((char *)s);
+        return (NULL);
+}
+
+
 // в line записано strdup "" чтобы строка была без мусора
 // в цикле происходит полное чтение файла txt с помощью записи функции read
 // в переменную butes_was_read
 // массив записывается по 10 символов в лайн при помощи склеивания строк (strjoin)
 // после последнего прочитанного байта ставится \0
-
+// ft_strchr - когда среди прочитанных байт внутри цикла встретиться 
+// конец строки - завершить чтение
+// вывод обрезанной строки т к остаток никуда не сохранился
 int	get_next_line(int fd, char **line)
 {
 	char buf[10 + 1];
 	int bytes_was_read;
 	
 	
-	*line = strdup("");
+	*line = ft_strdup("");
 	while ((bytes_was_read = read(fd, &buf, 10)))
 	{
+	if (ft_strchr(buf, '\n'))
+		{
+		break; 
+		}
 	buf[bytes_was_read] = '\0';
 	*line = ft_strjoin(*line, buf);
 	}
